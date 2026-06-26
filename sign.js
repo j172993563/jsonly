@@ -3,6 +3,7 @@
 */
 
 const req = $request
+$notification.post("body", req.body)
 let b = JSON.parse(req.body)
 const [c,d] = generate8DigitRandom(2)
 
@@ -23,7 +24,7 @@ switch(b.type){
 	  $done({})
 }
 req.body = JSON.stringify(b)
-console.log(req)
+$notification.post("modified", req)
 $done(req)
 
 function generate8DigitRandom(count = 1, len = 8) {
