@@ -15,7 +15,7 @@ switch(b.type){
 		b.verticalAccuracy = "57.173576" + d
 		break
 	case 2:
-	  b.longitude = Number('113.333619' + c)
+	  b.longitude = Number('112.333619' + c)
 		$persistentStore.write(b.longitude, 'longitude')
 		b.latitude = Number('23.132247' + d)
 		$persistentStore.write(b.latitude, 'latitude')
