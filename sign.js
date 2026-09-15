@@ -5,19 +5,21 @@
 const req = $request
 $notification.post("body", req.body)
 let b = JSON.parse(req.body)
-const [c,d] = generate8DigitRandom(2)
+
 
 switch(b.type){
 	case 1:
+	const [c,d] = generateDigitRandom(2, 8)
 	  b.longitude = $persistentStore.read('longitude')*1
 		b.latitude = $persistentStore.read('latitude')*1
 		b.altitude = "20.199134" + c
 		b.verticalAccuracy = "57.173576" + d
 		break
 	case 2:
-	  b.longitude = Number('113.326204' + c)
+	const [c,d] = generateDigitRandom(2, 6)
+	  b.longitude = Number('113.3262046' + c)
 		$persistentStore.write(b.longitude, 'longitude')
-		b.latitude = Number('23.124189' + d)
+		b.latitude = Number('23.124189724' + d)
 		$persistentStore.write(b.latitude, 'latitude')
 		break
 	default:
@@ -27,7 +29,7 @@ req.body = JSON.stringify(b)
 $notification.post("modified", req)
 $done(req)
 
-function generate8DigitRandom(count = 1, len = 8) {
+function generateDigitRandom(count = 1, len) {
   const result = [];
   for (let i = 0; i < count; i++) {
     // 生成 0 ~ 99999999 随机整数，转字符串后补 0 至 8 位
