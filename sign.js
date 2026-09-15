@@ -11,13 +11,13 @@ switch(b.type){
 	case 1:
 	  b.longitude = $persistentStore.read('longitude')*1
 		b.latitude = $persistentStore.read('latitude')*1
-		b.altitude = "40.199134" + c
+		b.altitude = "20.199134" + c
 		b.verticalAccuracy = "57.173576" + d
 		break
 	case 2:
-	  b.longitude = Number('113.333619' + c)
+	  b.longitude = Number('113.326204' + c)
 		$persistentStore.write(b.longitude, 'longitude')
-		b.latitude = Number('23.132247' + d)
+		b.latitude = Number('23.124189' + d)
 		$persistentStore.write(b.latitude, 'latitude')
 		break
 	default:
