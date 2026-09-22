@@ -9,33 +9,41 @@ let b = JSON.parse(req.body)
 
 switch(b.type){
 	case 1:
-	const [c,d] = generateDigitRandom(2, 8)
-	  b.longitude = $persistentStore.read('longitude')*1
+	 b.longitude = $persistentStore.read('longitude')*1
 		b.latitude = $persistentStore.read('latitude')*1
-		b.altitude = "20.199134" + c
-		b.verticalAccuracy = "57.173576" + d
 		break
 	case 2:
-	const [c,d] = generateDigitRandom(2, 6)
-	  b.longitude = Number('113.3262046' + c)
+	 b.longitude = fillDecimal('113.3262046', b.longitude)
 		$persistentStore.write(b.longitude, 'longitude')
-		b.latitude = Number('23.124189724' + d)
+		b.latitude = fillDecimal('23.1241', b.latitude)
 		$persistentStore.write(b.latitude, 'latitude')
 		break
 	default:
-	  $done({})
+	 $done({})
 }
 req.body = JSON.stringify(b)
-$notification.post("modified", req)
+$notification.post("modified", req.body)
 $done(req)
 
-function generateDigitRandom(count = 1, len) {
-  const result = [];
-  for (let i = 0; i < count; i++) {
-    // 生成 0 ~ 99999999 随机整数，转字符串后补 0 至 8 位
-    const randomNum = Math.floor(Math.random() * 100000000);
-    const DigitStr = randomNum.toString().padStart(len, '0');
-    result.push(DigitStr);
-  }
-  return result;
+/**
+ * @param {string|number} strA 源坐标，保留整数+前N位小数
+ * @param {string|number} strB 参考坐标，截取小数尾部补全
+ * @returns {number} 最终结果，Number数字类型
+ */
+function fillDecimal(strA, strB) {
+    // 统一转为字符串处理
+    const sA = String(strA);
+    const sB = String(strB);
+
+    // 拆分整数、小数部分
+    const [intA, decA = ""] = sA.split('.');
+    const [, decB = ""] = sB.split('.');
+
+    const decALen = decA.length;
+    // 截取B小数部分，从decALen位置开始的尾部
+    const tail = decB.slice(decALen);
+
+    // 拼接完整字符串，再转为Number
+    const resultStr = `${intA}.${decA}${tail}`;
+    return Number(resultStr);
 }
