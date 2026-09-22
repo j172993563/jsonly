@@ -13,7 +13,7 @@ switch(b.type){
 		b.latitude = $persistentStore.read('latitude')*1
 		break
 	case 2:
-	 b.longitude = fillDecimal('113.3262046', b.longitude)
+	 b.longitude = fillDecimal('113.3263', b.longitude)
 		$persistentStore.write(b.longitude, 'longitude')
 		b.latitude = fillDecimal('23.1241', b.latitude)
 		$persistentStore.write(b.latitude, 'latitude')
